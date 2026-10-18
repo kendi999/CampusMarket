@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CampusMarket.ViewModels"
+             x:Class="CampusMarket.Views.DetailAnnoncePage"
+             x:DataType="vm:DetailViewModel"
+             Title="Détail"
+             BackgroundColor="White">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="16,16,16,24" Spacing="14">
+
+                <!-- Retour -->
+                <Label Text="←" FontSize="30" TextColor="{StaticResource Indigo}"
+                       HorizontalOptions="Start" Padding="0,0,24,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RetourCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <!-- Image provisoire -->
+                <Border BackgroundColor="{StaticResource Lavande}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 20"
+                        HeightRequest="240">
+                    <Grid>
+                                                <Label Text="{Binding AnnonceCourante.Emoji}" FontSize="110"
+                               HorizontalOptions="Center" VerticalOptions="Center"
+                               IsVisible="{Binding AnnonceCourante.SansPhoto}" />
+                        <Image Source="{Binding AnnonceCourante.PhotoChemin}" Aspect="AspectFill"
+                               IsVisible="{Binding AnnonceCourante.APhoto}" />
+                        <Border BackgroundColor="#99000000"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 12"
+                                Padding="10,4"
+                                Margin="12"
+                                HorizontalOptions="End" VerticalOptions="End">
+                            <Label Text="1/3" TextColor="White" FontSize="12" />
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- Titre et prix -->
+                <Label Text="{Binding AnnonceCourante.Titre}"
+                       FontSize="24" FontAttributes="Bold" TextColor="Black" />
+                <Label Text="{Binding AnnonceCourante.PrixAffiche}"
+                       FontSize="24" FontAttributes="Bold"
+                       TextColor="{StaticResource Indigo}" />
+
+                <!-- Etat et catégorie -->
+                <HorizontalStackLayout Spacing="10">
+                    <Border Style="{StaticResource Puce}">
+                        <Label Text="{Binding AnnonceCourante.Etat}"
+                               TextColor="{StaticResource Indigo}" />
+                    </Border>
+                    <Border Style="{StaticResource Puce}">
+                        <Label Text="{Binding AnnonceCourante.Categorie}"
+                               TextColor="{StaticResource Indigo}" />
+                    </Border>
+                </HorizontalStackLayout>
+
+                <!-- Description -->
+                <Label Text="{Binding AnnonceCourante.Description}"
+                       FontSize="16" TextColor="Black" />
+
+                <!-- Signaler -->
+                <Label Text="Signaler cette annonce"
+                       TextColor="{StaticResource Erreur}"
+                       TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OuvrirSignalementCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <!-- Vendeur -->
+                <Border BackgroundColor="{StaticResource Lavande}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="14">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Border Grid.Column="0"
+                                BackgroundColor="#D3D5F2"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 28"
+                                WidthRequest="56" HeightRequest="56">
+                            <Label Text="{Binding AnnonceCourante.Vendeur.Initiales}"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource Indigo}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="{Binding AnnonceCourante.Vendeur.NomComplet}"
+                                   FontAttributes="Bold" TextColor="Black" />
+                            <Label Text="{Binding AnnonceCourante.Vendeur.Filiere}"
+                                   FontSize="13" TextColor="{StaticResource GrisTexte}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bouton fixe en bas -->
+        <Button Grid.Row="1" Text="Contacter le vendeur"
+                Style="{StaticResource BoutonPrincipal}"
+                Command="{Binding ContacterCommand}"
+                Margin="16,8,16,16" />
+    </Grid>
+</ContentPage>

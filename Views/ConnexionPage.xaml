@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CampusMarket.ViewModels"
+             x:Class="CampusMarket.Views.ConnexionPage"
+             x:DataType="vm:ConnexionViewModel"
+             Title="Connexion"
+             BackgroundColor="White">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24,40" Spacing="12">
+
+            <!-- Logo provisoire (on mettra ton image plus tard) -->
+            <Image Source="logo.png" WidthRequest="96" HeightRequest="96"
+                   HorizontalOptions="Center" />
+
+            <Label Text="CampusMarket" Style="{StaticResource TitrePage}"
+                   HorizontalOptions="Center" Margin="0,12,0,0" />
+            <Label Text="Achetez et vendez entre étudiants"
+                   TextColor="{StaticResource GrisTexte}"
+                   HorizontalOptions="Center" Margin="0,0,0,24" />
+
+            <!-- E-mail -->
+            <Border Style="{StaticResource ChampBordure}">
+                <Entry Placeholder="prenom.nom@unive.edu"
+                       Keyboard="Email"
+                       Text="{Binding Email}"
+                       Style="{StaticResource ChampEntry}" />
+            </Border>
+            <Label Text="Veillez remplir ce champs pour vous connecter s'il vous plaît"
+                   Style="{StaticResource MessageErreur}"
+                   IsVisible="{Binding ErreurEmail}" />
+
+            <!-- Mot de passe -->
+            <Border Style="{StaticResource ChampBordure}">
+                <Entry Placeholder="Mot de passe"
+                       IsPassword="True"
+                       Text="{Binding MotDePasse}"
+                       Style="{StaticResource ChampEntry}" />
+            </Border>
+            <Label Text="Veillez remplir ce champs pour vous connecter s'il vous plaît"
+                   Style="{StaticResource MessageErreur}"
+                   IsVisible="{Binding ErreurMotDePasse}" />
+
+            <Label Text="Mot de passe oublié?"
+                   TextColor="{StaticResource Indigo}"
+                   HorizontalOptions="End" />
+
+            <!-- Bouton -->
+            <Button Text="Se connecter"
+                    Style="{StaticResource BoutonPrincipal}"
+                    Command="{Binding SeConnecterCommand}"
+                    Margin="0,16,0,0" />
+            <Label Text="Veillez remplir les différents champs pour vous connecter s'il vous plaît"
+                   Style="{StaticResource MessageErreur}"
+                   HorizontalTextAlignment="Center"
+                   IsVisible="{Binding ErreurGenerale}" />
+            <Label Text="{Binding MessageConnexion}"
+                   Style="{StaticResource MessageErreur}"
+                   HorizontalTextAlignment="Center"
+                   IsVisible="{Binding MessageVisible}" />                   
+
+            <!-- Créer un compte -->
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,16,0,0" Spacing="4">
+                <Label Text="Pas de compte ?" TextColor="{StaticResource GrisTexte}" />
+                <Label Text="Créer un compte" TextColor="{StaticResource Indigo}"
+                       FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CreerCompteCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+
+            <Label Text="Réservé aux étudiants de votre établissement"
+                   TextColor="{StaticResource GrisTexte}" FontSize="13"
+                   HorizontalOptions="Center" Margin="0,24,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

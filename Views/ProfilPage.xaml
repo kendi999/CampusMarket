@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CampusMarket.ViewModels"
+             xmlns:models="clr-namespace:CampusMarket.Models"
+             x:Class="CampusMarket.Views.ProfilPage"
+             x:DataType="vm:ProfilViewModel"
+             Title="Profil"
+             BackgroundColor="White">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24,32" Spacing="10">
+
+            <Border BackgroundColor="{StaticResource Lavande}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 48"
+                    WidthRequest="96" HeightRequest="96"
+                    HorizontalOptions="Center">
+                <Label Text="{Binding Initiales}" FontSize="30" FontAttributes="Bold"
+                       TextColor="{StaticResource Indigo}"
+                       HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+
+            <Label Text="{Binding NomComplet}" FontSize="24" FontAttributes="Bold"
+                   TextColor="Black" HorizontalOptions="Center" Margin="0,8,0,0" />
+            <Label Text="{Binding Email}" TextColor="{StaticResource GrisTexte}"
+                   HorizontalOptions="Center" />
+            <Label Text="{Binding Etablissement}" TextColor="{StaticResource GrisTexte}"
+                   HorizontalOptions="Center" />
+
+            <!-- Mes annonces -->
+            <Label Text="{Binding TitreMesAnnonces}" FontSize="18" FontAttributes="Bold"
+                   TextColor="Black" Margin="0,20,0,4" />
+
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding MesAnnonces}" Spacing="12">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:Annonce">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                            <Border Grid.Column="0"
+                                    BackgroundColor="{StaticResource Lavande}"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 12"
+                                    WidthRequest="64" HeightRequest="64">
+                                                                <Grid>
+                                    <Label Text="{Binding Emoji}" FontSize="30"
+                                           HorizontalOptions="Center" VerticalOptions="Center"
+                                           IsVisible="{Binding SansPhoto}" />
+                                    <Image Source="{Binding PhotoChemin}" Aspect="AspectFill"
+                                           IsVisible="{Binding APhoto}" />
+                                </Grid>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                <Label Text="{Binding Titre}" FontAttributes="Bold" FontSize="16"
+                                       TextColor="Black" />
+                                <Label Text="{Binding PrixAffiche}" Style="{StaticResource PrixLabel}" />
+                                <Label Text="{Binding EtatLieu}" FontSize="12"
+                                       TextColor="{StaticResource GrisTexte}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <Button Text="Se déconnecter"
+                    Style="{StaticResource BoutonPrincipal}"
+                    Command="{Binding SeDeconnecterCommand}"
+                    Margin="0,28,0,0" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

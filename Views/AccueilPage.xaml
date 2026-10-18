@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CampusMarket.ViewModels"
+             xmlns:models="clr-namespace:CampusMarket.Models"
+             x:Class="CampusMarket.Views.AccueilPage"
+             x:DataType="vm:AccueilViewModel"
+             Title="Accueil"
+             BackgroundColor="White">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*" Padding="16,16,16,0" RowSpacing="12">
+
+        <!-- En-tête : Campus + logo à gauche, badge utilisateur à droite -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="8">
+            <Label Grid.Column="0" Text="Campus" FontSize="18"
+                   TextColor="{StaticResource GrisTexte}" VerticalOptions="Center" />
+
+                        <Image Grid.Column="1" Source="logo.png"
+                   WidthRequest="48" HeightRequest="48" />
+
+            <Border Grid.Column="3"
+                    BackgroundColor="{StaticResource Lavande}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 30"
+                    WidthRequest="56" HeightRequest="56">
+                <Label Text="{Binding Initiales}" FontAttributes="Bold" FontSize="13"
+                       TextColor="{StaticResource Indigo}"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+        </Grid>
+
+        <!-- Nom du campus -->
+        <Label Grid.Row="1" Text="{Binding NomCampus}"
+               FontAttributes="Bold" FontSize="16" TextColor="Black" />
+
+        <!-- Recherche -->
+        <Border Grid.Row="2" Style="{StaticResource ChampBordure}">
+            <Entry Placeholder="Rechercher une annonce"
+                   Text="{Binding Recherche}"
+                   Style="{StaticResource ChampEntry}" />
+        </Border>
+
+        <!-- Filtres -->
+        <ScrollView Grid.Row="3" Orientation="Horizontal"
+                    HorizontalScrollBarVisibility="Never">
+            <HorizontalStackLayout Spacing="10">
+
+                <Button Text="Tous" CornerRadius="12" HeightRequest="40" Padding="18,0"
+                        BackgroundColor="{StaticResource Lavande}"
+                        TextColor="{StaticResource Indigo}"
+                        Command="{Binding ChoisirFiltreCommand}" CommandParameter="Tous">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding FiltreActif}" Value="Tous">
+                            <Setter Property="BackgroundColor" Value="{StaticResource Indigo}" />
+                            <Setter Property="TextColor" Value="White" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Button Text="Livres" CornerRadius="12" HeightRequest="40" Padding="18,0"
+                        BackgroundColor="{StaticResource Lavande}"
+                        TextColor="{StaticResource Indigo}"
+                        Command="{Binding ChoisirFiltreCommand}" CommandParameter="Livres">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding FiltreActif}" Value="Livres">
+                            <Setter Property="BackgroundColor" Value="{StaticResource Indigo}" />
+                            <Setter Property="TextColor" Value="White" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Button Text="Electronique" CornerRadius="12" HeightRequest="40" Padding="18,0"
+                        BackgroundColor="{StaticResource Lavande}"
+                        TextColor="{StaticResource Indigo}"
+                        Command="{Binding ChoisirFiltreCommand}" CommandParameter="Electronique">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding FiltreActif}" Value="Electronique">
+                            <Setter Property="BackgroundColor" Value="{StaticResource Indigo}" />
+                            <Setter Property="TextColor" Value="White" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Button Text="Autres" CornerRadius="12" HeightRequest="40" Padding="18,0"
+                        BackgroundColor="{StaticResource Lavande}"
+                        TextColor="{StaticResource Indigo}"
+                        Command="{Binding ChoisirFiltreCommand}" CommandParameter="Autres">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding FiltreActif}" Value="Autres">
+                            <Setter Property="BackgroundColor" Value="{StaticResource Indigo}" />
+                            <Setter Property="TextColor" Value="White" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        <!-- Grille des annonces -->
+        <CollectionView Grid.Row="4" ItemsSource="{Binding AnnoncesAffichees}"
+                SelectionMode="Single" SelectionChanged="OnSelectionChanged">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="2"
+                                 VerticalItemSpacing="12" HorizontalItemSpacing="12" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.EmptyView>
+                <Label Text="Aucune annonce trouvée"
+                       TextColor="{StaticResource GrisTexte}"
+                       HorizontalOptions="Center" Margin="0,40,0,0" />
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Annonce">
+                    <VerticalStackLayout Spacing="4" Padding="0,0,0,8">
+                        <Border BackgroundColor="{StaticResource Lavande}"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 14"
+                                HeightRequest="130">
+                                                        <Grid>
+                                <Label Text="{Binding Emoji}" FontSize="56"
+                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                       IsVisible="{Binding SansPhoto}" />
+                                       
+                                <Image Source="{Binding PhotoChemin}" Aspect="AspectFill"
+                                       IsVisible="{Binding APhoto}" />
+                            </Grid>
+                        </Border>
+                        <Label Text="{Binding Titre}" FontAttributes="Bold" FontSize="16"
+                               TextColor="Black" HorizontalTextAlignment="Center"
+                               LineBreakMode="TailTruncation" MaxLines="1" />
+                        <Label Text="{Binding PrixAffiche}" Style="{StaticResource PrixLabel}"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="{Binding InfoAffichee}" FontSize="12" FontAttributes="Bold"
+                               TextColor="{StaticResource GrisTexte}"
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

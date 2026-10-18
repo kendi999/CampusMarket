@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CampusMarket.ViewModels"
+             x:Class="CampusMarket.Views.SignalerPage"
+             x:DataType="vm:SignalerViewModel"
+             Title="Signaler"
+             BackgroundColor="White">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,16,20,24" Spacing="14">
+
+            <Label Text="Annuler" FontSize="17" TextColor="{StaticResource Indigo}"
+                   HorizontalOptions="Start" Padding="0,0,24,0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding AnnulerCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label Text="Signaler cette annonce" Style="{StaticResource TitrePage}" />
+            <Label Text="Pourquoi signalez-vous cette annonce ?"
+                   FontAttributes="Bold" FontSize="17" TextColor="Black" />
+
+            <!-- Les 5 motifs : un seul choix possible -->
+            <VerticalStackLayout Spacing="4"
+                                 RadioButtonGroup.GroupName="motifs"
+                                 RadioButtonGroup.SelectedValue="{Binding MotifChoisi}">
+                <RadioButton Content="Arnaque ou faux prix" Value="Arnaque ou faux prix"
+                             TextColor="Black" />
+                <RadioButton Content="Article interdit" Value="Article interdit"
+                             TextColor="Black" />
+                <RadioButton Content="Annonce en double" Value="Annonce en double"
+                             TextColor="Black" />
+                <RadioButton Content="Contenu inapproprié" Value="Contenu inapproprié"
+                             TextColor="Black" />
+                <RadioButton Content="Autre" Value="Autre"
+                             TextColor="Black" />
+            </VerticalStackLayout>
+
+            <Label Text="Veuillez choisir un motif"
+                   Style="{StaticResource MessageErreur}"
+                   IsVisible="{Binding ErreurMotif}" />
+
+            <!-- Détails -->
+            <Border Style="{StaticResource ChampBordure}"
+                    HeightRequest="120" Padding="12,8">
+                <Editor Placeholder="Détails (facultatif)"
+                        Text="{Binding Details}"
+                        BackgroundColor="Transparent"
+                        TextColor="Black"
+                        PlaceholderColor="{StaticResource GrisTexte}"
+                        FontSize="16" />
+            </Border>
+
+            <Button Text="Envoyer le signalement"
+                    Style="{StaticResource BoutonPrincipal}"
+                    Command="{Binding EnvoyerCommand}"
+                    Margin="0,8,0,0" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

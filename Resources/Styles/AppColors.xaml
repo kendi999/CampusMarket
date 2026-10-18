@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Bleu du logo / icône active -->
+    <Color x:Key="BleuLogo">#1E5EFF</Color>
+    <!-- Indigo des boutons et prix -->
+    <Color x:Key="Indigo">#5046E5</Color>
+    <!-- Fond des puces / avatars -->
+    <Color x:Key="Lavande">#E6E8F5</Color>
+    <!-- Icônes inactives de la barre d'onglets -->
+    <Color x:Key="GrisIcone">#7B8BA8</Color>
+    <Color x:Key="GrisTexte">#6B7280</Color>
+    <Color x:Key="GrisBordure">#A0A0A0</Color>
+    <Color x:Key="GrisFond">#EEEEEE</Color>
+    <Color x:Key="Erreur">#FF0000</Color>
+    <Color x:Key="EnLigne">#00D930</Color>
+
+    <!-- Catégories -->
+    <Color x:Key="CatLivres">#7C4DFF</Color>
+    <Color x:Key="CatSport">#FF7A1A</Color>
+    <Color x:Key="CatInformatique">#00B8A9</Color>
+    <Color x:Key="CatAutres">#6B7280</Color>
+
+</ResourceDictionary>

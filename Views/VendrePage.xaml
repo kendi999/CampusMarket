@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CampusMarket.ViewModels"
+             x:Class="CampusMarket.Views.VendrePage"
+             x:DataType="vm:VendreViewModel"
+             Title="Vendre"
+             BackgroundColor="White">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,16,20,24" Spacing="10">
+
+            <!-- Annuler -->
+            <Label Text="Annuler" FontSize="17" TextColor="{StaticResource Indigo}"
+                   HorizontalOptions="Start" Padding="0,0,24,0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding AnnulerCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label Text="Nouvelle annonce" Style="{StaticResource TitrePage}" />
+
+            <!-- Photo -->
+                        <!-- Photo -->
+            <Border BackgroundColor="{StaticResource Lavande}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 16"
+                    HeightRequest="140" Margin="0,6,0,6">
+                <Grid>
+                    <Label Text="+ Photo" FontSize="20" FontAttributes="Bold"
+                           TextColor="{StaticResource Indigo}"
+                           HorizontalOptions="Center" VerticalOptions="Center"
+                           IsVisible="{Binding SansPhotoChoisie}" />
+                    <Image Source="{Binding PhotoChemin}" Aspect="AspectFill"
+                           IsVisible="{Binding APhotoChoisie}" />
+                </Grid>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding AjouterPhotoCommand}" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- Titre -->
+            <Border Style="{StaticResource ChampBordure}">
+                <Entry Placeholder="Titre"
+                       Text="{Binding Titre}"
+                       Style="{StaticResource ChampEntry}" />
+            </Border>
+            <Label Text="Veuillez saisir un titre"
+                   Style="{StaticResource MessageErreur}"
+                   IsVisible="{Binding ErreurTitre}" />
+
+            <!-- Catégorie -->
+            <Border Style="{StaticResource ChampBordure}">
+                <Picker Title="Catégorie"
+                        ItemsSource="{Binding Categories}"
+                        SelectedItem="{Binding CategorieChoisie}"
+                        TextColor="Black"
+                        TitleColor="{StaticResource GrisTexte}"
+                        BackgroundColor="Transparent"
+                        FontSize="17"
+                        VerticalOptions="Center" />
+            </Border>
+            <Label Text="Veuillez choisir une catégorie"
+                   Style="{StaticResource MessageErreur}"
+                   IsVisible="{Binding ErreurCategorie}" />
+
+            <!-- Prix -->
+            <Border Style="{StaticResource ChampBordure}">
+                <Entry Placeholder="Prix (FCFA)"
+                       Keyboard="Numeric"
+                       Text="{Binding PrixTexte}"
+                       Style="{StaticResource ChampEntry}" />
+            </Border>
+            <Label Text="Veuillez saisir un prix valide"
+                   Style="{StaticResource MessageErreur}"
+                   IsVisible="{Binding ErreurPrix}" />
+
+            <!-- Etat -->
+            <Label Text="Etat" FontAttributes="Bold" FontSize="16"
+                   TextColor="Black" Margin="0,6,0,0" />
+            <HorizontalStackLayout Spacing="10">
+
+                <Button Text="Neuf" CornerRadius="12" HeightRequest="40" Padding="18,0"
+                        BackgroundColor="{StaticResource Lavande}"
+                        TextColor="{StaticResource Indigo}"
+                        Command="{Binding ChoisirEtatCommand}" CommandParameter="Neuf">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding EtatChoisi}" Value="Neuf">
+                            <Setter Property="BackgroundColor" Value="{StaticResource Indigo}" />
+                            <Setter Property="TextColor" Value="White" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Button Text="Bon état" CornerRadius="12" HeightRequest="40" Padding="18,0"
+                        BackgroundColor="{StaticResource Lavande}"
+                        TextColor="{StaticResource Indigo}"
+                        Command="{Binding ChoisirEtatCommand}" CommandParameter="Bon état">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding EtatChoisi}" Value="Bon état">
+                            <Setter Property="BackgroundColor" Value="{StaticResource Indigo}" />
+                            <Setter Property="TextColor" Value="White" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Button Text="Usé" CornerRadius="12" HeightRequest="40" Padding="18,0"
+                        BackgroundColor="{StaticResource Lavande}"
+                        TextColor="{StaticResource Indigo}"
+                        Command="{Binding ChoisirEtatCommand}" CommandParameter="Usé">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding EtatChoisi}" Value="Usé">
+                            <Setter Property="BackgroundColor" Value="{StaticResource Indigo}" />
+                            <Setter Property="TextColor" Value="White" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+            </HorizontalStackLayout>
+            <Label Text="Veuillez choisir un état"
+                   Style="{StaticResource MessageErreur}"
+                   IsVisible="{Binding ErreurEtat}" />
+
+            <!-- Détails -->
+            <Border Style="{StaticResource ChampBordure}"
+                    HeightRequest="120" Padding="12,8" Margin="0,6,0,0">
+                <Editor Placeholder="Détails"
+                        Text="{Binding Details}"
+                        BackgroundColor="Transparent"
+                        TextColor="Black"
+                        PlaceholderColor="{StaticResource GrisTexte}"
+                        FontSize="16" />
+            </Border>
+
+            <!-- Publier -->
+            <Button Text="Publier mon annonce"
+                    Style="{StaticResource BoutonPrincipal}"
+                    Command="{Binding PublierCommand}"
+                    Margin="0,12,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

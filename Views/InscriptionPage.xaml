@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CampusMarket.ViewModels"
+             x:Class="CampusMarket.Views.InscriptionPage"
+             x:DataType="vm:InscriptionViewModel"
+             Title="Inscription"
+             BackgroundColor="White">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24,32" Spacing="8">
+
+            <!-- Titre à gauche, logo à droite -->
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,16">
+                <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" Spacing="4">
+                    <Label Text="Créer un compte" Style="{StaticResource TitrePage}" />
+                    <Label Text="Réserver aux étudiants vérifiés"
+                           TextColor="{StaticResource GrisTexte}" />
+                </VerticalStackLayout>
+
+            <Image Grid.Column="1" Source="logo.png"
+                       WidthRequest="72" HeightRequest="72" />
+            </Grid>
+
+            <!-- Nom complet -->
+            <Border Style="{StaticResource ChampBordure}">
+                <Entry Placeholder="Nom complet"
+                       Text="{Binding NomComplet}"
+                       Style="{StaticResource ChampEntry}" />
+            </Border>
+            <Label Text="Veillez remplir ce champs pour vous s'inscrire s'il vous plaîte"
+                   Style="{StaticResource MessageErreur}"
+                   IsVisible="{Binding ErreurNom}" />
+
+            <!-- Email universitaire -->
+            <Border Style="{StaticResource ChampBordure}">
+                <Entry Placeholder="Email universitaire"
+                       Keyboard="Email"
+                       Text="{Binding Email}"
+                       Style="{StaticResource ChampEntry}" />
+            </Border>
+            <Label Text="Veillez remplir ce champs pour vous s'inscrire s'il vous plaîte"
+                   Style="{StaticResource MessageErreur}"
+                   IsVisible="{Binding ErreurEmail}" />
+
+            <!-- Établissement -->
+            <Border Style="{StaticResource ChampBordure}">
+                <Entry Placeholder="Etablissement"
+                       Text="{Binding Etablissement}"
+                       Style="{StaticResource ChampEntry}" />
+            </Border>
+            <Label Text="Veillez remplir ce champs pour vous s'inscrire s'il vous plaîte"
+                   Style="{StaticResource MessageErreur}"
+                   IsVisible="{Binding ErreurEtablissement}" />
+
+            <!-- Mot de passe -->
+            <Border Style="{StaticResource ChampBordure}">
+                <Entry Placeholder="Mot de passe"
+                       IsPassword="True"
+                       Text="{Binding MotDePasse}"
+                       Style="{StaticResource ChampEntry}" />
+            </Border>
+            <Label Text="Veillez remplir ce champs pour vous s'inscrire s'il vous plaîte"
+                   Style="{StaticResource MessageErreur}"
+                   IsVisible="{Binding ErreurMotDePasse}" />
+
+            <!-- Confirmation -->
+            <Border Style="{StaticResource ChampBordure}">
+                <Entry Placeholder="Confirmer le mot de passe"
+                       IsPassword="True"
+                       Text="{Binding Confirmation}"
+                       Style="{StaticResource ChampEntry}" />
+            </Border>
+            <Label Text="{Binding ErreurConfirmation}"
+                   Style="{StaticResource MessageErreur}"
+                   IsVisible="{Binding ErreurConfirmationVisible}" />
+
+            <!-- Conditions d'utilisation -->
+            <HorizontalStackLayout Spacing="8" Margin="0,8,0,0">
+                <CheckBox IsChecked="{Binding CguAcceptees}"
+                          Color="{StaticResource Indigo}"
+                          VerticalOptions="Center" />
+                <Label Text="J'accepte les conditions d'utilisation"
+                       TextColor="{StaticResource GrisTexte}"
+                       VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <!-- Bouton -->
+            <Button Text="S'inscrire"
+                    Style="{StaticResource BoutonPrincipal}"
+                    Command="{Binding SInscrireCommand}"
+                    Margin="0,16,0,0" />
+            <Label Text="Veillez remplir les différents champs pour vous s'inscrire s'il vous plaîte"
+                   Style="{StaticResource MessageErreur}"
+                   HorizontalTextAlignment="Center"
+                   IsVisible="{Binding ErreurGenerale}" />
+            <Label Text="{Binding MessageCompte}"
+                   Style="{StaticResource MessageErreur}"
+                   HorizontalTextAlignment="Center"
+                   IsVisible="{Binding MessageCompteVisible}" />       
+
+            <!-- Retour à la connexion -->
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,16,0,0" Spacing="4">
+                <Label Text="Déjà inscrit ?" TextColor="{StaticResource GrisTexte}" />
+                <Label Text="Se connecter" TextColor="{StaticResource Indigo}"
+                       FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SeConnecterCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CampusMarket.ViewModels"
+             xmlns:models="clr-namespace:CampusMarket.Models"
+             x:Class="CampusMarket.Views.ConversationPage"
+             x:DataType="vm:ConversationViewModel"
+             Title="Conversation"
+             BackgroundColor="White">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="16,16,16,12" RowSpacing="12">
+
+        <!-- Retour, interlocuteur, menu -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+            <Label Grid.Column="0" Text="←" FontSize="30"
+                   TextColor="{StaticResource Indigo}"
+                   VerticalOptions="Center" Padding="0,0,8,0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding RetourCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Border Grid.Column="1"
+                    BackgroundColor="#E2E0FA"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 20"
+                    Padding="12">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Border Grid.Column="0"
+                            BackgroundColor="#D3D5F2"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 26"
+                            WidthRequest="52" HeightRequest="52">
+                        <Label Text="{Binding DiscussionCourante.Interlocuteur.Initiales}"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource Indigo}"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="1">
+                        <Label Text="{Binding DiscussionCourante.Interlocuteur.NomComplet}"
+                               FontAttributes="Bold" FontSize="16"
+                               TextColor="{StaticResource Indigo}" />
+                        <Label Text="{Binding DiscussionCourante.Interlocuteur.Filiere}"
+                               FontSize="13" TextColor="{StaticResource GrisTexte}" />
+                        <Label Text="En ligne" FontSize="13"
+                               TextColor="{StaticResource EnLigne}"
+                               IsVisible="{Binding DiscussionCourante.EnLigne}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <Label Grid.Column="2" Text="⋮" FontSize="30"
+                   TextColor="{StaticResource GrisTexte}"
+                   VerticalOptions="Center" Padding="8,0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OuvrirMenuCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+
+        <!-- Carte de l'article concerné -->
+        <Border Grid.Row="1"
+                IsVisible="{Binding AfficheProduit}"
+                BackgroundColor="{StaticResource GrisFond}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 12"
+                Padding="10">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <Border Grid.Column="0"
+                        BackgroundColor="{StaticResource Lavande}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 10"
+                        WidthRequest="52" HeightRequest="52">
+                                       <Grid>
+                        <Label Text="{Binding DiscussionCourante.AnnonceLiee.Emoji}" FontSize="26"
+                               HorizontalOptions="Center" VerticalOptions="Center"
+                               IsVisible="{Binding DiscussionCourante.AnnonceLiee.SansPhoto}" />
+                        <Image Source="{Binding DiscussionCourante.AnnonceLiee.PhotoChemin}"
+                               Aspect="AspectFill"
+                               IsVisible="{Binding DiscussionCourante.AnnonceLiee.APhoto}" />
+                    </Grid>
+                </Border>
+                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                    <Label Text="{Binding DiscussionCourante.AnnonceLiee.Titre}"
+                           FontAttributes="Bold" FontSize="16" TextColor="Black" />
+                    <Label Text="{Binding DiscussionCourante.AnnonceLiee.PrixAffiche}"
+                           Style="{StaticResource PrixLabel}" />
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+
+        <!-- Messages -->
+        <CollectionView Grid.Row="2" ItemsSource="{Binding Messages}"
+                        ItemsUpdatingScrollMode="KeepLastItemInView">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:MessageChat">
+                    <Grid>
+                        <!-- Message reçu  -->
+                        <VerticalStackLayout IsVisible="{Binding EstAutre}"
+                                             HorizontalOptions="Start"
+                                             MaximumWidthRequest="290" Spacing="2">
+                            <Border BackgroundColor="{StaticResource Lavande}"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 16"
+                                    Padding="14,10">
+                                <Label Text="{Binding Texte}" TextColor="Black" FontSize="16" />
+                            </Border>
+                            <Label Text="{Binding Heure}" FontSize="12"
+                                   TextColor="{StaticResource GrisTexte}"
+                                   HorizontalOptions="End" />
+                        </VerticalStackLayout>
+
+                        <!-- Message envoyé -->
+                        <VerticalStackLayout IsVisible="{Binding EstMoi}"
+                                             HorizontalOptions="End"
+                                             MaximumWidthRequest="290" Spacing="2">
+                            <Border BackgroundColor="{StaticResource Indigo}"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 16"
+                                    Padding="14,10">
+                                <Label Text="{Binding Texte}" TextColor="White" FontSize="16" />
+                            </Border>
+                            <Label Text="{Binding Heure}" FontSize="12"
+                                   TextColor="{StaticResource GrisTexte}"
+                                   HorizontalOptions="Start" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Saisie -->
+        <Grid Grid.Row="3" ColumnDefinitions="*,Auto" ColumnSpacing="10">
+            <Border Grid.Column="0" Style="{StaticResource ChampBordure}">
+                <Entry Placeholder="Message"
+                       Text="{Binding NouveauMessage}"
+                       ReturnCommand="{Binding EnvoyerCommand}"
+                       Style="{StaticResource ChampEntry}" />
+            </Border>
+            <Button Grid.Column="1" Text="➤" FontSize="22"
+                    BackgroundColor="{StaticResource Indigo}" TextColor="White"
+                    CornerRadius="26" WidthRequest="52" HeightRequest="52" Padding="0"
+                    Command="{Binding EnvoyerCommand}" />
+        </Grid>
+
+    </Grid>
+</ContentPage>

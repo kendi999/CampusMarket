@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Bouton principal (S'inscrire, Se connecter, Publier...) -->
+    <Style x:Key="BoutonPrincipal" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Indigo}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="HeightRequest" Value="56" />
+    </Style>
+
+    <!-- Cadre arrondi autour d'un champ de saisie -->
+    <Style x:Key="ChampBordure" TargetType="Border">
+        <Setter Property="Stroke" Value="{StaticResource GrisBordure}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+        <Setter Property="Padding" Value="12,0" />
+        <Setter Property="HeightRequest" Value="52" />
+    </Style>
+
+    <!-- Entry sans bordure, à mettre dans un ChampBordure -->
+    <Style x:Key="ChampEntry" TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="Black" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource GrisTexte}" />
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Puce (Tous, Livres, Prix...) -->
+    <Style x:Key="Puce" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource Lavande}" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+        <Setter Property="Padding" Value="16,8" />
+    </Style>
+
+    <Style x:Key="TitrePage" TargetType="Label">
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="Black" />
+    </Style>
+
+    <Style x:Key="PrixLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource Indigo}" />
+    </Style>
+
+    <Style x:Key="MessageErreur" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource Erreur}" />
+        <Setter Property="FontSize" Value="13" />
+    </Style>
+
+</ResourceDictionary>

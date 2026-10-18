@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell x:Class="CampusMarket.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:CampusMarket.Views"
+       Title="CampusMarket"
+       FlyoutBehavior="Disabled"
+       Shell.NavBarIsVisible="False"
+       Shell.TabBarBackgroundColor="White"
+       Shell.TabBarTitleColor="{StaticResource Indigo}"
+       Shell.TabBarUnselectedColor="{StaticResource GrisIcone}">
+
+    <!-- Authentification -->
+    <ShellContent Route="connexion"
+                  ContentTemplate="{DataTemplate views:ConnexionPage}" />
+    <ShellContent Route="inscription"
+                  ContentTemplate="{DataTemplate views:InscriptionPage}" />
+
+    <!-- Barre d'onglets de lapp -->
+    <TabBar Route="principal">
+        <ShellContent Title="Accueil" Route="accueil" Icon="iaccueil.png"
+                      ContentTemplate="{DataTemplate views:AccueilPage}" />
+        <ShellContent Title="Rechercher" Route="recherche" Icon="irechercher.png"
+                      ContentTemplate="{DataTemplate views:RecherchePage}" />
+        <ShellContent Title="Vendre" Route="vendre" Icon="ivendre.png"
+                      ContentTemplate="{DataTemplate views:VendrePage}" />
+        <ShellContent Title="Messages" Route="messages" Icon="imessage.png"
+                      ContentTemplate="{DataTemplate views:MessagesPage}" />
+        <ShellContent Title="Profil" Route="profil" Icon="iprofil.png"
+                      ContentTemplate="{DataTemplate views:ProfilPage}" />
+    </TabBar>
+</Shell>

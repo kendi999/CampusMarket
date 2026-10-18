@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CampusMarket.ViewModels"
+             xmlns:models="clr-namespace:CampusMarket.Models"
+             x:Class="CampusMarket.Views.RecherchePage"
+             x:DataType="vm:RechercheViewModel"
+             Title="Rechercher"
+             BackgroundColor="White">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*"
+          Padding="16,16,16,0" RowSpacing="12">
+
+        <!-- En-tête -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="8">
+            <Label Grid.Column="0" Text="Campus" FontSize="18"
+                   TextColor="{StaticResource GrisTexte}" VerticalOptions="Center" />
+                        <Image Grid.Column="1" Source="logo.png"
+                   WidthRequest="48" HeightRequest="48" />
+            <Border Grid.Column="3"
+                    BackgroundColor="{StaticResource Lavande}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 30"
+                    WidthRequest="56" HeightRequest="56">
+                <Label Text="{Binding Initiales}" FontAttributes="Bold" FontSize="13"
+                       TextColor="{StaticResource Indigo}"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+        </Grid>
+
+        <Label Grid.Row="1" Text="{Binding NomCampus}"
+               FontAttributes="Bold" FontSize="16" TextColor="Black" />
+
+        <!-- Champ de recherche -->
+        <Border Grid.Row="2" Style="{StaticResource ChampBordure}">
+            <Entry Placeholder="Rechercher une annonce"
+                   Text="{Binding Recherche}"
+                   Style="{StaticResource ChampEntry}" />
+        </Border>
+
+        <!-- Filtres Prix / Etat / Trier -->
+        <HorizontalStackLayout Grid.Row="3" Spacing="10">
+            <Button Text="{Binding LibellePrix}" CornerRadius="12" HeightRequest="40" Padding="18,0"
+                    BackgroundColor="{StaticResource Lavande}"
+                    TextColor="{StaticResource Indigo}"
+                    Command="{Binding CyclerPrixCommand}">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding PrixActif}" Value="True">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Indigo}" />
+                        <Setter Property="TextColor" Value="White" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+
+            <Button Text="{Binding LibelleEtat}" CornerRadius="12" HeightRequest="40" Padding="18,0"
+                    BackgroundColor="{StaticResource Lavande}"
+                    TextColor="{StaticResource Indigo}"
+                    Command="{Binding CyclerEtatCommand}">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding EtatActif}" Value="True">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Indigo}" />
+                        <Setter Property="TextColor" Value="White" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+
+            <Button Text="{Binding LibelleTri}" CornerRadius="12" HeightRequest="40" Padding="18,0"
+                    BackgroundColor="{StaticResource Lavande}"
+                    TextColor="{StaticResource Indigo}"
+                    Command="{Binding CyclerTriCommand}">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding TriActif}" Value="True">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Indigo}" />
+                        <Setter Property="TextColor" Value="White" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+        </HorizontalStackLayout>
+
+        <!-- Catégories -->
+        <VerticalStackLayout Grid.Row="4" Spacing="10">
+            <Label Text="Catégories" FontAttributes="Bold" FontSize="16" TextColor="Black" />
+
+            <Grid ColumnDefinitions="*,*,*,*">
+
+                <VerticalStackLayout Grid.Column="0" Spacing="6" HorizontalOptions="Center">
+                    <Border BackgroundColor="{StaticResource CatLivres}"
+                            Stroke="Transparent" StrokeThickness="3"
+                            StrokeShape="RoundRectangle 16"
+                            WidthRequest="64" HeightRequest="64">
+                                               <Image Source="cat_livres.jpg" Aspect="AspectFill" />
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding CategorieActive}" Value="Livres">
+                                <Setter Property="Stroke" Value="#5046E5" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                    </Border>
+                    <Label Text="Livres" FontAttributes="Bold" FontSize="13"
+                           TextColor="Black" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChoisirCategorieCommand}"
+                                              CommandParameter="Livres" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" Spacing="6" HorizontalOptions="Center">
+                    <Border BackgroundColor="{StaticResource CatSport}"
+                            Stroke="Transparent" StrokeThickness="3"
+                            StrokeShape="RoundRectangle 16"
+                            WidthRequest="64" HeightRequest="64">
+                            <Image Source="cat_sport.jpg" Aspect="AspectFill" />
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding CategorieActive}" Value="Sport">
+                                <Setter Property="Stroke" Value="#5046E5" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                    </Border>
+                    <Label Text="Sport" FontAttributes="Bold" FontSize="13"
+                           TextColor="Black" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChoisirCategorieCommand}"
+                                              CommandParameter="Sport" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="2" Spacing="6" HorizontalOptions="Center">
+                    <Border BackgroundColor="{StaticResource CatInformatique}"
+                            Stroke="Transparent" StrokeThickness="3"
+                            StrokeShape="RoundRectangle 16"
+                            WidthRequest="64" HeightRequest="64">
+                            <Image Source="cat_informatique.jpg" Aspect="AspectFill" />
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding CategorieActive}" Value="Informatique">
+                                <Setter Property="Stroke" Value="#5046E5" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                    </Border>
+                    <Label Text="Informatique" FontAttributes="Bold" FontSize="13"
+                           TextColor="Black" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChoisirCategorieCommand}"
+                                              CommandParameter="Informatique" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="3" Spacing="6" HorizontalOptions="Center">
+                    <Border BackgroundColor="{StaticResource CatAutres}"
+                            Stroke="Transparent" StrokeThickness="3"
+                            StrokeShape="RoundRectangle 16"
+                            WidthRequest="64" HeightRequest="64">
+                            <Image Source="cat_autres.jpg" Aspect="AspectFill" />
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding CategorieActive}" Value="Autres">
+                                <Setter Property="Stroke" Value="#5046E5" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                    </Border>
+                    <Label Text="Autres" FontAttributes="Bold" FontSize="13"
+                           TextColor="Black" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChoisirCategorieCommand}"
+                                              CommandParameter="Autres" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+            </Grid>
+        </VerticalStackLayout>
+
+        <!-- Compteur -->
+        <Label Grid.Row="5" Text="{Binding ResultatsTexte}"
+               FontAttributes="Bold" FontSize="16" TextColor="Black" />
+
+        <!-- Résultats -->
+        <CollectionView Grid.Row="6" ItemsSource="{Binding Resultats}"
+                SelectionMode="Single" SelectionChanged="OnSelectionChanged">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="14" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Annonce">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Border Grid.Column="0"
+                                BackgroundColor="{StaticResource Lavande}"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 12"
+                                WidthRequest="72" HeightRequest="72">
+                                                        <Grid>
+                                <Label Text="{Binding Emoji}" FontSize="34"
+                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                       IsVisible="{Binding SansPhoto}" />
+                                <Image Source="{Binding PhotoChemin}" Aspect="AspectFill"
+                                       IsVisible="{Binding APhoto}" />
+                            </Grid>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="{Binding Titre}" FontAttributes="Bold" FontSize="17"
+                                   TextColor="Black" />
+                            <Label Text="{Binding PrixAffiche}" Style="{StaticResource PrixLabel}" />
+                            <Label Text="{Binding EtatLieu}" FontSize="13" FontAttributes="Bold"
+                                   TextColor="{StaticResource GrisTexte}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>
